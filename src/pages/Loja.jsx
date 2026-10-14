@@ -32,7 +32,7 @@ export default function Loja({ produtos, onAdicionar }) {
         <h1>Produtos</h1>
       </div>
 
-      <div className="filtros" role="group" aria-label="Filtrar por categoria">
+      <div className="filtros" role="group" aria-label="Filtre por categoria">
         {CATEGORIAS.map((item) => (
           <button
             key={item.id}
