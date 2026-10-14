@@ -15,6 +15,8 @@ export default function App() {
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState(null)
   const [carrinho, setCarrinho] = useState([])
+  const [mensagemCarrinho, setMensagemCarrinho] = useState('')
+  const [listaEspera, setListaEspera] = useState([])
   const [clientes, setClientes] = useState([])
   const [clienteAtualId, setClienteAtualId] = useState(null)
 
@@ -30,8 +32,25 @@ export default function App() {
     })
   }, [])
 
+  useEffect(() => {
+    if (!mensagemCarrinho) return
+
+    const temporizador = setTimeout(() => {
+      setMensagemCarrinho('')
+    }, 3200)
+
+    return () => clearTimeout(temporizador)
+  }, [mensagemCarrinho])
+
   function adicionarAoCarrinho(produto) {
-    setCarrinho(carrinho.concat(produto))
+    const precoValido = produto && produto.price != null && Number.isFinite(Number(produto.price))
+
+    if (!produto || !precoValido || produto.estoque === 0) {
+      return
+    }
+
+    setCarrinho((anterior) => [...anterior, { ...produto, price: Number(produto.price) }])
+    setMensagemCarrinho(`${produto.title} adicionado ao carrinho!`)
   }
 
   function removerUmaUnidade(produtoId) {
@@ -48,6 +67,18 @@ export default function App() {
     )
   }
 
+  function registrarInteresse({ produtoId, nome, email }) {
+    const jaRegistrado = listaEspera.some(
+      (item) => item.produtoId === produtoId && item.email.toLowerCase() === email.toLowerCase()
+    )
+
+    if (jaRegistrado) {
+      return
+    }
+
+    setListaEspera((anterior) => [...anterior, { produtoId, nome, email }])
+  }
+
   const clienteAtual = clientes.find((cliente) => cliente.id === clienteAtualId)
 
   return (
@@ -58,6 +89,11 @@ export default function App() {
       <main className="conteudo">
         {carregando && <p className="aviso">Carregando produtos...</p>}
         {erro && <p className="aviso aviso-erro">{erro}</p>}
+        {mensagemCarrinho && (
+          <p className="mensagem-carrinho" role="status" aria-live="polite">
+            {mensagemCarrinho}
+          </p>
+        )}
 
         {!carregando && !erro && (
           <Routes>
@@ -67,7 +103,13 @@ export default function App() {
             />
             <Route
               path="/produto/:id"
-              element={<PaginaProduto produtos={produtos} onAdicionar={adicionarAoCarrinho} />}
+              element={
+                <PaginaProduto
+                  produtos={produtos}
+                  onAdicionar={adicionarAoCarrinho}
+                  onRegistrarInteresse={registrarInteresse}
+                />
+              }
             />
             <Route
               path="/carrinho"
@@ -81,7 +123,10 @@ export default function App() {
                 />
               }
             />
-            <Route path="/estoque" element={<Estoque produtos={produtos} />} />
+            <Route
+              path="/estoque"
+              element={<Estoque produtos={produtos} listaEspera={listaEspera} />}
+            />
           </Routes>
         )}
       </main>

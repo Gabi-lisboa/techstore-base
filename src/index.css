@@ -111,6 +111,18 @@ h2 {
   color: var(--cor-texto-suave);
 }
 
+.mensagem-carrinho {
+  height: 100%;
+  width: 300px;
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio);
+  background: rgba(214, 5, 16, 0.12);
+  border: 1px solid rgba(168, 14, 27, 0.5);
+  color: #ca485a;
+  font-weight: 700;
+  po
+}
+
 .aviso-erro {
   color: var(--cor-erro);
   font-weight: 600;
@@ -395,7 +407,7 @@ h2 {
   font-size: 0.85rem;
 }
 
-.preco-original + .preco {
+.preco-original+.preco {
   color: var(--cor-destaque);
 }
 
@@ -591,6 +603,30 @@ h2 {
   font-weight: 700;
 }
 
+.aviso-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  padding: var(--espaco-4);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+}
+
+.aviso-form input {
+  width: 100%;
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-fundo);
+}
+
+.mensagem-espera {
+  margin: 0;
+  color: var(--cor-frete);
+  font-weight: 600;
+}
+
 /* Carrinho */
 
 .carrinho-layout {
@@ -622,7 +658,7 @@ h2 {
   padding: var(--espaco-4);
 }
 
-.item-carrinho + .item-carrinho {
+.item-carrinho+.item-carrinho {
   border-top: 1px solid var(--cor-borda);
 }
 
@@ -719,6 +755,20 @@ h2 {
   font-weight: 600;
 }
 
+.mensagem-frete {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cor-frete);
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-frete-fundo);
+}
+
+.mensagem-frete-ok {
+  color: var(--cor-frete);
+}
+
 .resumo-linha,
 .total {
   display: flex;
@@ -807,7 +857,7 @@ h2 {
   text-align: left;
   padding: var(--espaco-3) var(--espaco-4);
   border-bottom: 1px solid var(--cor-borda);
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .tabela th {
@@ -821,6 +871,22 @@ h2 {
 
 .tabela tbody tr:last-child td {
   border-bottom: none;
+}
+
+.lista-espera {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espaco-2);
+}
+
+.lista-espera li {
+  line-height: 1.4;
+}
+
+.texto-suave {
+  color: var(--cor-texto-suave);
 }
 
 /* Rodapé */
